@@ -6,11 +6,7 @@ public abstract class LibraryItem {
     public int id;
     
     public LibraryItem(String name) {
-        this();
         this.name = name;
-    }
-    
-    public LibraryItem() {
         count++;
         id = count;
     }
@@ -21,8 +17,10 @@ public abstract class LibraryItem {
     }	
     
  // rename existing book
- 	public void setName(String name) {
+ 	public String setName(String name) {
  		this.name = name;
+ 		
+ 		return name;
  	}
  	
  	// get Books name

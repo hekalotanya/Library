@@ -13,8 +13,10 @@ public class Book extends LibraryItem {
    
 	
 	// set books author
-	public void setAuthor(String author) {
+	public String setAuthor(String author) {
 		this.author = author;
+		
+		return this.author;
 	}
 	
 	// get books author
@@ -23,8 +25,10 @@ public class Book extends LibraryItem {
 	}
 	
 	// set books publishing year
-	public void setYear(int year) {
+	public int setYear(int year) {
 		this.publishingYear = year;
+		
+		return publishingYear;
 	}
 		
 	// get books publishing year
