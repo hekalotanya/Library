@@ -1,12 +1,10 @@
 package Library;
-
+import java.util.Scanner;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Scanner;
+
 public class BookManager {
-    void createLibrary(ArrayList<Book> books) {
+    ArrayList<Book> createLibrary(ArrayList<Book> books) {
     
         books.add(new Book("Harry Potter", "J.K. Rowling", 1997));
         books.add(new Book("Game of Thrones: A Feast for Crows", "George R.R. Martin", 2005));
@@ -15,6 +13,8 @@ public class BookManager {
         books.add(new Book("Martin Eden", "Jack London", 1909));
         
         printLibrary(books);
+        
+        return books;
     }
 
     private void deleteBook(ArrayList<Book> books) throws IncorrectIdException {
@@ -54,15 +54,9 @@ public class BookManager {
         if(bookPublishingYear < 0 || bookPublishingYear > year) {
         	throw new IncorrectYearException();
         }
-        System.out.println(LibraryItem.getItemsCount());
-        	if(LibraryItem.getItemsCount() >= books.size()) {
-        		books.add(books.size(), new Book(bookName, bookAuthor, bookPublishingYear));
-        	} else {
-        		Book book = books.get(LibraryItem.getItemsCount() + 1);
-        		book.setName(bookName);
-            	book.setAuthor(bookAuthor);
-            	book.setYear(bookPublishingYear);
-        	}
+
+        books.add(books.size(), new Book(bookName, bookAuthor, bookPublishingYear));
+        	
         printLibrary(books);
     }
     
@@ -101,7 +95,7 @@ public class BookManager {
 		Scanner scanner = new Scanner(System.in);
         System.out.printf("Enter name of the book for show information about it: ");
         String temp = scanner.nextLine();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < books.size(); i++) {
         	Book book = books.get(i);
             if (book.getName() != null && temp.toLowerCase().equals(book.getName().toLowerCase())) {
                 System.out.println("ID: " + book.id + " | " + book.getName() + " | " + book.getAuthor() + " | " + book.getYear());
@@ -116,7 +110,7 @@ public class BookManager {
         	try {
         		addBook(books);
         	} catch (IncorrectNameException | IncorrectAuthorException | IncorrectYearException e) {
-        		e.printStackTrace();
+        		e.printStackTrace();	
         	}
         } else if (S.equals("B")) {
         	try {
