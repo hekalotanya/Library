@@ -1,94 +1,88 @@
-package Library;
-
+package src.Library;
+import java.util.Scanner;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Scanner;
+
 public class BookManager {
-    void createLibrary(ArrayList<Book> books) {
-    
+    ArrayList<Book> createLibrary(ArrayList<Book> books) {
+
         books.add(new Book("Harry Potter", "J.K. Rowling", 1997));
         books.add(new Book("Game of Thrones: A Feast for Crows", "George R.R. Martin", 2005));
         books.add(new Book("David Copperfield", "Charles Dickens", 1940));
         books.add(new Book("The Stoic", "Theodor Dreiser", 1947));
         books.add(new Book("Martin Eden", "Jack London", 1909));
-        
+
         printLibrary(books);
+
+        return books;
     }
 
     private void deleteBook(ArrayList<Book> books) throws IncorrectIdException {
         @SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.printf("Enter a book id to delete it: ");
-        
+
         int temp = scanner.nextInt();
-        
+
         for (int i = 0; i < books.size(); i++) {
-        	Book book = books.get(i);
+            Book book = books.get(i);
             if(book.id == temp) {
-            	books.remove(books.indexOf(book));
+                books.remove(books.indexOf(book));
             }
         }
-        
+
         System.out.println("The Library after delete is: ");
         printLibrary(books);
     }
 
     private void addBook(ArrayList<Book> books) throws IncorrectNameException, IncorrectAuthorException, IncorrectYearException  {
         @SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter a book name: ");
         String bookName = scanner.nextLine();
         if(bookName.equals("") || bookName.length() < 3) {
-        	throw new IncorrectNameException();
+            throw new IncorrectNameException();
         }
         System.out.println("Please enter a book author: ");
         String bookAuthor = scanner.nextLine();
         if(bookAuthor.length() < 3) {
-        	throw new IncorrectAuthorException();
+            throw new IncorrectAuthorException();
         }
         System.out.println("Please enter a book publishing year: ");
         int bookPublishingYear = scanner.nextInt();
         int year = Year.now().getValue();
         if(bookPublishingYear < 0 || bookPublishingYear > year) {
-        	throw new IncorrectYearException();
+            throw new IncorrectYearException();
         }
-        System.out.println(LibraryItem.getItemsCount());
-        	if(LibraryItem.getItemsCount() >= books.size()) {
-        		books.add(books.size(), new Book(bookName, bookAuthor, bookPublishingYear));
-        	} else {
-        		Book book = books.get(LibraryItem.getItemsCount() + 1);
-        		book.setName(bookName);
-            	book.setAuthor(bookAuthor);
-            	book.setYear(bookPublishingYear);
-        	}
+
+        books.add(books.size(), new Book(bookName, bookAuthor, bookPublishingYear));
+
         printLibrary(books);
     }
-    
+
     void printLibrary(ArrayList<Book> books) {
-    	System.out.println("########## LIST OF BOOKS START ##########");
+        System.out.println("########## LIST OF BOOKS START ##########");
         for (int i = 0; i < books.size(); i++) {
-           
-            	Book book = books.get(i);
-                System.out.println("ID: " + book.id + " | " 
-                		+ "name: " + book.getName() + " | " 
-                		+ "author: " + book.getAuthor() + " | " 
-                		+ "published: " + book.getYear());
+
+            Book book = books.get(i);
+            System.out.println("ID: " + book.id + " | "
+                    + "name: " + book.getName() + " | "
+                    + "author: " + book.getAuthor() + " | "
+                    + "published: " + book.getYear());
         }
         System.out.println("########## LIST OF BOOKS END ##########");
     }
 
     private void showBookById(ArrayList<Book> books) throws IncorrectIdException {
         @SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.printf("Enter a book id to show information about it: ");
         int temp = scanner.nextInt();
         if (temp > LibraryItem.getItemsCount() || temp < 0) {
             throw new IncorrectIdException();
         }
         for (int i = 0; i < books.size(); i++) {
-        	Book book = books.get(i);
+            Book book = books.get(i);
             if (temp == book.id) {
                 System.out.println("ID: " + book.id + " | " + book.getName() + " | " + book.getAuthor() + " | " + book.getYear());
                 break;
@@ -98,11 +92,11 @@ public class BookManager {
 
     private void showBookByName(ArrayList<Book> books) {
         @SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.printf("Enter name of the book for show information about it: ");
         String temp = scanner.nextLine();
-        for (int i = 0; i < 100; i++) {
-        	Book book = books.get(i);
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
             if (book.getName() != null && temp.toLowerCase().equals(book.getName().toLowerCase())) {
                 System.out.println("ID: " + book.id + " | " + book.getName() + " | " + book.getAuthor() + " | " + book.getYear());
                 break;
@@ -113,26 +107,26 @@ public class BookManager {
     void selectAct(ArrayList<Book> books, Menu menu) {
         String S = menu.selectMenu();
         if (S.equals("A")) {
-        	try {
-        		addBook(books);
-        	} catch (IncorrectNameException | IncorrectAuthorException | IncorrectYearException e) {
-        		e.printStackTrace();
-        	}
+            try {
+                addBook(books);
+            } catch (IncorrectNameException | IncorrectAuthorException | IncorrectYearException e) {
+                e.printStackTrace();
+            }
         } else if (S.equals("B")) {
-        	try {
-        		showBookById(books);
-        	} catch (IncorrectIdException e) {
-        		e.printStackTrace();
-        	}
-            
+            try {
+                showBookById(books);
+            } catch (IncorrectIdException e) {
+                e.printStackTrace();
+            }
+
         } else if (S.equals("C")) {
             showBookByName(books);
         } else if (S.equals("D")) {
-        	try {        		
-        		deleteBook(books);
-        	} catch (IncorrectIdException e) {
-        		e.printStackTrace();
-        	}
+            try {
+                deleteBook(books);
+            } catch (IncorrectIdException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.printf("Your input %s is wrong.", S);
         }
