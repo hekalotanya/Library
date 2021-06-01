@@ -1,4 +1,4 @@
-package src.Library;
+package Library;
 
 public class IncorrectIdException extends Exception {
     public IncorrectIdException() {

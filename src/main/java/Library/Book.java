@@ -1,4 +1,4 @@
-package src.Library;
+package Library;
 
 public class Book extends LibraryItem {
     private String author;

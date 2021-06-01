@@ -1,4 +1,4 @@
-package src.Library;
+package Library;
 import java.util.ArrayList;
 
 public class Main {

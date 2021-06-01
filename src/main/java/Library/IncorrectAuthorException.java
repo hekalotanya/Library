@@ -1,4 +1,4 @@
-package src.Library;
+package Library;
 
 public class IncorrectAuthorException extends Exception {
     public IncorrectAuthorException() {
